@@ -81,8 +81,8 @@ function App() {
     <div className="App">
       <input
         type="text"
-        value={inko.ko2en(email)}
-        onChange={(e) => setEmail(e.target.value)}
+        value={email}
+        onChange={(e) => setEmail(inko.ko2en(e.target.value))}
         // onKeyDown={handleKeyDown}
         // onKeyUp={handleKeyUp}
       />
