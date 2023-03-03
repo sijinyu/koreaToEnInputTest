@@ -1,16 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import "./App.css";
 import { convertToEnglish, koreanToEnglishMap } from "./assets/helper";
-import { Inko } from "./assets/helper/test";
+
 function App() {
   const [email, setEmail] = useState("");
-
   const isShiftKeyPressed = useRef(false);
-  const testEmail = useRef("");
-  const inko = Inko();
+  const lastHangulChar = useRef("");
   function handleChangeEmail(value: string): void {
-    setEmail(inko.ko2en(value));
-    testEmail.current = value;
+    setEmail(value);
   }
   function handleKeyUp(event: React.KeyboardEvent<HTMLInputElement>) {
     if (event.code === "ShiftLeft" || event.code === "ShiftRight") {
@@ -23,18 +20,19 @@ function App() {
       isShiftKeyPressed.current = true;
     }
   }
-  //   inputEvent: React.ChangeEvent<HTMLInputElement>,
-  //   callback: (value: string) => void
-  // ) {
-  //   const inputValue = inputEvent.target.value;
-  //   const jamoArray = splitJamo(inputValue);
-  //   const convertedText = jamoArray
-  //     .map((jamo) =>
-  //       convertToEnglish(koreanToEnglishMap, isShiftKeyPressed.current)(jamo)
-  //     )
-  //     .join("");
-  //   callback(convertedText);
-  // }
+  function handleInput(
+    inputEvent: React.ChangeEvent<HTMLInputElement>,
+    callback: (value: string) => void
+  ) {
+    const inputValue = inputEvent.target.value;
+    const jamoArray = splitJamo(inputValue);
+    const convertedText = jamoArray
+      .map((jamo) =>
+        convertToEnglish(koreanToEnglishMap, isShiftKeyPressed.current)(jamo)
+      )
+      .join("");
+    callback(convertedText);
+  }
 
   function splitJamo(input: string) {
     const hangulPattern = /[\uAC00-\uD7AF]/;
@@ -76,17 +74,16 @@ function App() {
 
     return jamoArray;
   }
+
   return (
     <div className="App">
       <input
-        id="email"
         type="text"
         value={email}
-        onChange={(e) => handleChangeEmail(e.target.value)}
-        // onKeyDown={handleKeyDown}
-        // onKeyUp={handleKeyUp}
+        onKeyDown={handleKeyDown}
+        onKeyUp={handleKeyUp}
+        onChange={(e) => handleInput(e, handleChangeEmail)}
       />
-      <div>{testEmail.current}</div>
     </div>
   );
 }
