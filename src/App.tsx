@@ -6,7 +6,7 @@ import { convertToEnglish, koreanToEnglishMap } from "./assets/helper";
 function App() {
   const [email, setEmail] = useState("");
   const isShiftKeyPressed = useRef(false);
-
+  const lastHangulChar = useRef("");
   function handleChangeEmail(value: string): void {
     setEmail(value);
   }
