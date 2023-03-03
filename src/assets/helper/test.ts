@@ -1,50 +1,25 @@
 // constants
-var 영어 = "rRseEfaqQtTdwWczxvgASDFGZXCVkoiOjpuPhynbmlYUIHJKLBNM"; // 33 + 19개
-var 한글 =
+let 영어 = "rRseEfaqQtTdwWczxvgASDFGZXCVkoiOjpuPhynbmlYUIHJKLBNM"; // 33 + 19개
+let 한글 =
   "ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎㅁㄴㅇㄹㅎㅋㅌㅊㅍㅏㅐㅑㅒㅓㅔㅕㅖㅗㅛㅜㅠㅡㅣㅛㅕㅑㅗㅓㅏㅣㅠㅜㅡ"; // 33 + 19개
-var 초성 = "ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ"; // 19개
-var 중성 = "ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ"; // 21개
-var 종성 = "ㄱㄲㄳㄴㄵㄶㄷㄹㄺㄻㄼㄽㄾㄿㅀㅁㅂㅄㅅㅆㅇㅈㅊㅋㅌㅍㅎ"; // 27개
-var 첫모음 = 28;
-var 가 = 44032;
-var 힣 = 55203;
-var ㄱ = 12593;
-var ㅣ = 12643;
-
-var connectableConsonant = {
-  ㄱㅅ: "ㄳ",
-  ㄴㅈ: "ㄵ",
-  ㄴㅎ: "ㄶ",
-  ㄹㄱ: "ㄺ",
-  ㄹㅁ: "ㄻ",
-  ㄹㅂ: "ㄼ",
-  ㄹㅅ: "ㄽ",
-  ㄹㅌ: "ㄾ",
-  ㄹㅍ: "ㄿ",
-  ㄹㅎ: "ㅀ",
-  ㅂㅅ: "ㅄ",
-};
-
-var connectableVowel = {
-  ㅗㅏ: "ㅘ",
-  ㅗㅐ: "ㅙ",
-  ㅗㅣ: "ㅚ",
-  ㅜㅓ: "ㅝ",
-  ㅜㅔ: "ㅞ",
-  ㅜㅣ: "ㅟ",
-  ㅡㅣ: "ㅢ",
-};
+let 초성 = "ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ"; // 19개
+let 중성 = "ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ"; // 21개
+let 종성 = "ㄱㄲㄳㄴㄵㄶㄷㄹㄺㄻㄼㄽㄾㄿㅀㅁㅂㅄㅅㅆㅇㅈㅊㅋㅌㅍㅎ"; // 27개
+let 가 = 44032;
+let 힣 = 55203;
+let ㄱ = 12593;
+let ㅣ = 12643;
 
 // constructor
 export function Inko(this: any, _option?: {}) {
   function ko2en(input: string | any[] | undefined) {
-    var result = "";
+    let result = "";
     if (input === "" || input === undefined) return result;
-    var _분리 = [-1, -1, -1, -1, -1];
+    let _분리 = [-1, -1, -1, -1, -1];
 
-    for (var i = 0; i < input.length; i++) {
-      var _한글 = input[i];
-      var _코드 = _한글.charCodeAt();
+    for (let i = 0; i < input.length; i++) {
+      let _한글 = input[i];
+      let _코드 = _한글.charCodeAt();
       // 가 ~ 힣 사이에 있는 한글이라면
       if ((_코드 >= 가 && _코드 <= 힣) || (_코드 >= ㄱ && _코드 <= ㅣ)) {
         _분리 = 한글분리(_한글);
@@ -57,7 +32,7 @@ export function Inko(this: any, _option?: {}) {
         _분리 = [-1, -1, -1, -1, -1];
       }
 
-      for (var j = 0; j < _분리.length; j++) {
+      for (let j = 0; j < _분리.length; j++) {
         if (_분리[j] !== -1) result += 영어[_분리[j]];
       }
     }
@@ -65,12 +40,12 @@ export function Inko(this: any, _option?: {}) {
     return result;
   }
   function 한글분리(_한글: any) {
-    var 코드 = _한글.charCodeAt();
+    let 코드 = _한글.charCodeAt();
     if (코드 >= 가 && 코드 <= 힣) {
-      var 초 = Math.floor((코드 - 가) / 588);
-      var 중 = Math.floor((코드 - 가 - 초 * 588) / 28);
-      var 종 = 코드 - 가 - 초 * 588 - 중 * 28 - 1;
-      var 중1 = 중,
+      let 초 = Math.floor((코드 - 가) / 588);
+      let 중 = Math.floor((코드 - 가 - 초 * 588) / 28);
+      let 종 = 코드 - 가 - 초 * 588 - 중 * 28 - 1;
+      let 중1 = 중,
         중2 = -1,
         종1 = 종,
         종2 = -1;
@@ -122,11 +97,11 @@ export function Inko(this: any, _option?: {}) {
       return [초, 중1, 중2, 종1, 종2];
     } else if (코드 >= ㄱ && 코드 <= ㅣ) {
       if (초성.indexOf(_한글) > -1) {
-        var 초 = 한글.indexOf(_한글);
+        let 초 = 한글.indexOf(_한글);
         return [초, -1, -1, -1, -1];
       } else if (중성.indexOf(_한글) > -1) {
-        var 중 = 중성.indexOf(_한글);
-        var 중1 = 중,
+        let 중 = 중성.indexOf(_한글);
+        let 중1 = 중,
           중2 = -1;
         if (중 == 중성.indexOf("ㅘ"))
           (중1 = 한글.indexOf("ㅗ")), (중2 = 한글.indexOf("ㅏ"));
@@ -148,8 +123,8 @@ export function Inko(this: any, _option?: {}) {
 
         return [-1, 중1, 중2, -1, -1];
       } else if (종성.indexOf(_한글) > -1) {
-        var 종 = 종성.indexOf(_한글);
-        var 종1 = 종,
+        let 종 = 종성.indexOf(_한글);
+        let 종1 = 종,
           종2 = -1;
         if (종 == 종성.indexOf("ㄳ"))
           (종1 = 한글.indexOf("ㄱ")), (종2 = 한글.indexOf("ㅅ"));
@@ -180,12 +155,3 @@ export function Inko(this: any, _option?: {}) {
   }
   return { ko2en };
 }
-
-Inko.prototype.VERSION = "1.1.1";
-
-// 초성, 중성, 종성의 charCode를 받아서 합친 한글의 charCode를 반환함
-Inko.prototype.한글생성 = function (초: number, 중: number, 종: number) {
-  return String.fromCharCode(44032 + 초 * 588 + 중 * 28 + 종 + 1);
-};
-
-// 한글 입력값으로 받아서 초성, 중성, 종성 분리해줌

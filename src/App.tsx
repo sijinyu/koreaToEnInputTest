@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-import reactLogo from "./assets/react.svg";
 import "./App.css";
 import { convertToEnglish, koreanToEnglishMap } from "./assets/helper";
 import { Inko } from "./assets/helper/test";
@@ -7,7 +6,7 @@ function App() {
   const [email, setEmail] = useState("");
   const isShiftKeyPressed = useRef(false);
   const lastHangulChar = useRef("");
-
+  const inko = Inko();
   function handleChangeEmail(value: string): void {
     setEmail(value);
   }
@@ -17,7 +16,6 @@ function App() {
     }
   }
 
-  const inko = Inko();
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     if (event.code === "ShiftLeft" || event.code === "ShiftRight") {
       isShiftKeyPressed.current = true;
@@ -76,7 +74,7 @@ function App() {
 
     return jamoArray;
   }
-
+  console.log(inko.ko2en(e.target.value));
   return (
     <div className="App">
       <input
