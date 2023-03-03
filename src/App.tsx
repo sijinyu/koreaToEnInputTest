@@ -1,11 +1,16 @@
 import { useRef, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
-import { convertToEnglish, koreanToEnglishMap } from "./assets/helper";
-
+import {
+  convertToEnglish,
+  engTypeToKor,
+  koreanToEnglishMap,
+  korTypeToEng,
+} from "./assets/helper";
 function App() {
   const [email, setEmail] = useState("");
   const isShiftKeyPressed = useRef(false);
+
   const lastHangulChar = useRef("");
   function handleChangeEmail(value: string): void {
     setEmail(value);
@@ -21,19 +26,19 @@ function App() {
       isShiftKeyPressed.current = true;
     }
   }
-  function handleInput(
-    inputEvent: React.ChangeEvent<HTMLInputElement>,
-    callback: (value: string) => void
-  ) {
-    const inputValue = inputEvent.target.value;
-    const jamoArray = splitJamo(inputValue);
-    const convertedText = jamoArray
-      .map((jamo) =>
-        convertToEnglish(koreanToEnglishMap, isShiftKeyPressed.current)(jamo)
-      )
-      .join("");
-    callback(convertedText);
-  }
+  // function handleInput(
+  //   inputEvent: React.ChangeEvent<HTMLInputElement>,
+  //   callback: (value: string) => void
+  // ) {
+  //   const inputValue = inputEvent.target.value;
+  //   const jamoArray = splitJamo(inputValue);
+  //   const convertedText = jamoArray
+  //     .map((jamo) =>
+  //       convertToEnglish(koreanToEnglishMap, isShiftKeyPressed.current)(jamo)
+  //     )
+  //     .join("");
+  //   callback(convertedText);
+  // }
 
   function splitJamo(input: string) {
     const hangulPattern = /[\uAC00-\uD7AF]/;
@@ -75,15 +80,17 @@ function App() {
 
     return jamoArray;
   }
-
+  function doConvert(inputEvent: React.ChangeEvent<HTMLInputElement>) {
+    setEmail(korTypeToEng(inputEvent.target.value));
+  }
   return (
     <div className="App">
       <input
         type="text"
         value={email}
-        onKeyDown={handleKeyDown}
-        onKeyUp={handleKeyUp}
-        onChange={(e) => handleInput(e, handleChangeEmail)}
+        // onKeyDown={handleKeyDown}
+        // onKeyUp={handleKeyUp}
+        onChange={(e) => doConvert(e)}
       />
     </div>
   );
