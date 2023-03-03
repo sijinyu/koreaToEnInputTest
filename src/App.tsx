@@ -1,17 +1,13 @@
 import { useRef, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
-import {
-  convertToEnglish,
-  engTypeToKor,
-  koreanToEnglishMap,
-  korTypeToEng,
-} from "./assets/helper";
+import { convertToEnglish, koreanToEnglishMap } from "./assets/helper";
+import { Inko } from "./assets/helper/test";
 function App() {
   const [email, setEmail] = useState("");
   const isShiftKeyPressed = useRef(false);
-
   const lastHangulChar = useRef("");
+
   function handleChangeEmail(value: string): void {
     setEmail(value);
   }
@@ -21,12 +17,12 @@ function App() {
     }
   }
 
+  const inko = Inko();
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     if (event.code === "ShiftLeft" || event.code === "ShiftRight") {
       isShiftKeyPressed.current = true;
     }
   }
-  // function handleInput(
   //   inputEvent: React.ChangeEvent<HTMLInputElement>,
   //   callback: (value: string) => void
   // ) {
@@ -80,17 +76,15 @@ function App() {
 
     return jamoArray;
   }
-  function doConvert(inputEvent: React.ChangeEvent<HTMLInputElement>) {
-    setEmail(korTypeToEng(inputEvent.target.value));
-  }
+
   return (
     <div className="App">
       <input
         type="text"
-        value={email}
+        value={inko.ko2en(email)}
+        onChange={(e) => setEmail(e.target.value)}
         // onKeyDown={handleKeyDown}
         // onKeyUp={handleKeyUp}
-        onChange={(e) => doConvert(e)}
       />
     </div>
   );
