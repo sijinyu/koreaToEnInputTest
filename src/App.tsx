@@ -4,11 +4,13 @@ import { convertToEnglish, koreanToEnglishMap } from "./assets/helper";
 import { Inko } from "./assets/helper/test";
 function App() {
   const [email, setEmail] = useState("");
+
   const isShiftKeyPressed = useRef(false);
-  const lastHangulChar = useRef("");
+  const testEmail = useRef("");
   const inko = Inko();
   function handleChangeEmail(value: string): void {
-    setEmail(value);
+    setEmail(inko.ko2en(value));
+    testEmail.current = value;
   }
   function handleKeyUp(event: React.KeyboardEvent<HTMLInputElement>) {
     if (event.code === "ShiftLeft" || event.code === "ShiftRight") {
@@ -80,10 +82,11 @@ function App() {
       <input
         type="text"
         value={email}
-        onChange={(e) => setEmail(inko.ko2en(e.target.value))}
+        onChange={(e) => handleChangeEmail(e.target.value)}
         // onKeyDown={handleKeyDown}
         // onKeyUp={handleKeyUp}
       />
+      <div>{testEmail.current}</div>
     </div>
   );
 }
