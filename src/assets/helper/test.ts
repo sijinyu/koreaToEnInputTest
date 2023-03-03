@@ -19,7 +19,7 @@ export function Inko(this: any, _option?: {}) {
 
     for (let i = 0; i < input.length; i++) {
       let _한글 = input[i];
-      let _코드 = _한글.charCodeAt();
+      let _코드 = _한글.charCodeAt(0) || _한글.charCodeAt(1);
       // 가 ~ 힣 사이에 있는 한글이라면
       if ((_코드 >= 가 && _코드 <= 힣) || (_코드 >= ㄱ && _코드 <= ㅣ)) {
         _분리 = 한글분리(_한글);
@@ -40,7 +40,7 @@ export function Inko(this: any, _option?: {}) {
     return result;
   }
   function 한글분리(_한글: any) {
-    let 코드 = _한글.charCodeAt();
+    let 코드 = _한글.charCodeAt(0) || _한글.charCodeAt(1);
     if (코드 >= 가 && 코드 <= 힣) {
       let 초 = Math.floor((코드 - 가) / 588);
       let 중 = Math.floor((코드 - 가 - 초 * 588) / 28);

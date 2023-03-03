@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./App.css";
 import { convertToEnglish, koreanToEnglishMap } from "./assets/helper";
 import { Inko } from "./assets/helper/test";
@@ -76,10 +76,10 @@ function App() {
 
     return jamoArray;
   }
-
   return (
     <div className="App">
       <input
+        id="email"
         type="text"
         value={email}
         onChange={(e) => handleChangeEmail(e.target.value)}
