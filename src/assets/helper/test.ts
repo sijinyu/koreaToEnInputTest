@@ -11,18 +11,6 @@ var 힣 = 55203;
 var ㄱ = 12593;
 var ㅣ = 12643;
 
-var 영어index = (function (en) {
-  var x = {};
-  for (var i = 0; i < en.length; ++i) x[en[i]] = i;
-  return x;
-})(영어);
-
-var 한글index = (function (kr) {
-  var x = {};
-  for (var i = 0; i < kr.length; ++i) x[kr[i]] = i;
-  return x;
-})(한글);
-
 var connectableConsonant = {
   ㄱㅅ: "ㄳ",
   ㄴㅈ: "ㄵ",
@@ -76,7 +64,7 @@ export function Inko(this: any, _option?: {}) {
 
     return result;
   }
-  function 한글분리(_한글: string) {
+  function 한글분리(_한글: any) {
     var 코드 = _한글.charCodeAt();
     if (코드 >= 가 && 코드 <= 힣) {
       var 초 = Math.floor((코드 - 가) / 588);
