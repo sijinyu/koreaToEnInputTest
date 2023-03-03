@@ -74,7 +74,7 @@ function App() {
 
     return jamoArray;
   }
-  console.log(inko.ko2en(e.target.value));
+
   return (
     <div className="App">
       <input
