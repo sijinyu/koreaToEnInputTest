@@ -10,7 +10,7 @@ function App() {
     });
   };
 
-  const handleCompositionEnd = (e) => {
+  const handleCompositionEnd = (e: any) => {
     const convertedText = Array.from(
       e.target.value,
       convertToEnglish(koreanToEnglishMap, e.shiftKey)
@@ -18,7 +18,7 @@ function App() {
     setInputValue(convertedText);
   };
 
-  const handleInput = (e) => {
+  const handleInput = (e: any) => {
     const convertedText = Array.from(
       e.target.value,
       convertToEnglish(koreanToEnglishMap, e.shiftKey)
