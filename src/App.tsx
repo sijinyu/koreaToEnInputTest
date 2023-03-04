@@ -1,11 +1,13 @@
 import { useRef, useState } from "react";
 import "./App.css";
 import { convertToEnglish, koreanToEnglishMap } from "./assets/helper";
-
+import { Inko } from "./assets/helper/test";
 function App() {
   const [email, setEmail] = useState("");
   const isShiftKeyPressed = useRef(false);
-  const lastHangulChar = useRef("");
+  const test = useRef("");
+  const inputEl = useRef<HTMLTextAreaElement>(null);
+  const inko = Inko();
   function handleChangeEmail(value: string): void {
     setEmail(value);
   }
@@ -80,15 +82,20 @@ function App() {
 
     return jamoArray;
   }
-
+  function koreanToEnglish(text: string) {
+    let tt = document.getElementById("input") as HTMLTextAreaElement;
+    tt.value = inko.ko2en(text);
+    console.log(tt);
+    console.log(inko.ko2en(text));
+  }
   return (
     <div className="App">
-      <input
-        type="text"
-        value={email}
-        onKeyDown={handleKeyDown}
-        onKeyUp={handleKeyUp}
-        onInput={(e) => handleInput(e, handleChangeEmail)}
+      <textarea
+        id="input"
+        ref={inputEl}
+        // onKeyDown={handleKeyDown}
+        // onKeyUp={handleKeyUp}
+        onKeyUp={(e: any) => koreanToEnglish(e.target.value)}
       />
     </div>
   );
