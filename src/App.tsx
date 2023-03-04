@@ -82,7 +82,7 @@ function App() {
         value={email}
         onKeyDown={handleKeyDown}
         onKeyUp={handleKeyUp}
-        onChange={(e) => handleInput(e, handleChangeEmail)}
+        onInput={(e) => handleInput(e, handleChangeEmail)}
       />
     </div>
   );
