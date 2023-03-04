@@ -3,19 +3,19 @@ import "./App.css";
 import { convertToEnglish, koreanToEnglishMap } from "./assets/helper";
 import { Inko } from "./assets/helper/test";
 function App() {
-  const handleCompositionStart = () => {
-    setInputValue((prevValue) => {
-      return prevValue.replace(/\u200B/g, "");
-    });
-  };
+  // const handleCompositionStart = () => {
+  //   setInputValue((prevValue) => {
+  //     return prevValue.replace(/\u200B/g, "");
+  //   });
+  // };
 
-  const handleCompositionEnd = (e: any) => {
-    const convertedText = Array.from(
-      e.target.value,
-      convertToEnglish(koreanToEnglishMap, e.shiftKey)
-    ).join("");
-    setInputValue(convertedText);
-  };
+  // const handleCompositionEnd = (e: any) => {
+  //   const convertedText = Array.from(
+  //     e.target.value,
+  //     convertToEnglish(koreanToEnglishMap, e.shiftKey)
+  //   ).join("");
+  //   setInputValue(convertedText);
+  // };
 
   // const handleInput = (e: any) => {
   //   const convertedText = Array.from(
