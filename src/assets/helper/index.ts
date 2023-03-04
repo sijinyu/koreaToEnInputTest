@@ -65,61 +65,34 @@ export const koreanToEnglishMap: CharMap = {
 // }
 
 export function convertToEnglish(charMap: CharMap, isShiftKeyPressed: boolean) {
-  let prevChar = "";
+  let previousChar: string | null = null;
+  let previousEnglishChar: string | null = null;
+
   return function (char: string) {
     if (charMap[char]) {
       const englishChar = charMap[char];
-      let result = "";
       if (isShiftKeyPressed) {
-        result = englishChar.upper;
+        return englishChar.upper;
       } else {
-        result = englishChar.lower;
+        const convertedChar = englishChar.lower;
+        if (previousChar === "ㅗ" && char === "ㅏ") {
+          return previousEnglishChar === "K" ? "Q" : "q";
+        } else if (previousChar === "ㅗ" && char === "ㅐ") {
+          return previousEnglishChar === "K" ? "W" : "w";
+        } else if (previousChar === "ㅜ" && char === "ㅓ") {
+          return previousEnglishChar === "N" ? "J" : "j";
+        } else if (previousChar === "ㅜ" && char === "ㅔ") {
+          return previousEnglishChar === "N" ? "P" : "p";
+        } else {
+          previousChar = char;
+          previousEnglishChar = convertedChar;
+          return convertedChar;
+        }
       }
-      if (
-        prevChar &&
-        (prevChar === "ㄱ" ||
-          prevChar === "ㄲ" ||
-          prevChar === "ㄷ" ||
-          prevChar === "ㄸ" ||
-          prevChar === "ㅂ" ||
-          prevChar === "ㅃ" ||
-          prevChar === "ㅅ" ||
-          prevChar === "ㅆ" ||
-          prevChar === "ㅈ" ||
-          prevChar === "ㅉ" ||
-          prevChar === "ㅊ" ||
-          prevChar === "ㅋ" ||
-          prevChar === "ㅌ" ||
-          prevChar === "ㅍ" ||
-          prevChar === "ㅎ") &&
-        (char === "ㅏ" ||
-          char === "ㅐ" ||
-          char === "ㅑ" ||
-          char === "ㅒ" ||
-          char === "ㅓ" ||
-          char === "ㅔ" ||
-          char === "ㅕ" ||
-          char === "ㅖ" ||
-          char === "ㅗ" ||
-          char === "ㅘ" ||
-          char === "ㅙ" ||
-          char === "ㅚ" ||
-          char === "ㅛ" ||
-          char === "ㅜ" ||
-          char === "ㅝ" ||
-          char === "ㅞ" ||
-          char === "ㅟ" ||
-          char === "ㅠ" ||
-          char === "ㅡ" ||
-          char === "ㅢ" ||
-          char === "ㅣ")
-      ) {
-        result = result.substring(1);
-      }
-      prevChar = char;
-      return result;
+    } else {
+      previousChar = null;
+      previousEnglishChar = null;
+      return char;
     }
-    prevChar = "";
-    return char;
   };
 }
