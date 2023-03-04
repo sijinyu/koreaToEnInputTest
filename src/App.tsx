@@ -83,8 +83,8 @@ function App() {
     return jamoArray;
   }
   function koreanToEnglish(text: string) {
-    let tt = document.getElementById("input") as HTMLTextAreaElement;
-    tt.value = inko.ko2en(text);
+    let tt = document.getElementById("output") as HTMLDivElement;
+    tt.innerHTML = inko.ko2en(text);
     console.log(tt);
     console.log(inko.ko2en(text));
   }
@@ -97,6 +97,7 @@ function App() {
         // onKeyUp={handleKeyUp}
         onKeyUp={(e: any) => koreanToEnglish(e.target.value)}
       />
+      <div id="output"></div>
     </div>
   );
 }
