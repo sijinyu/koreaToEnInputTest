@@ -45,36 +45,20 @@ function App() {
     }
   }
 
-  // function handleInput(
-  //   inputEvent: React.ChangeEvent<HTMLInputElement>,
-  //   callback: (value: string) => void
-  // ) {
-  //   const inputValue = inputEvent.target.value;
-  //   const jamoArray = splitJamo(inputValue);
-  //   const convertedText = jamoArray
-  //     .map((jamo) =>
-  //       convertToEnglish(koreanToEnglishMap, isShiftKeyPressed.current)(jamo)
-  //     )
-  //     .join("");
-  //   callback(convertedText);
-  // }
   function handleInput(
-    event: React.ChangeEvent<HTMLInputElement>,
+    inputEvent: React.ChangeEvent<HTMLInputElement>,
     callback: (value: string) => void
   ) {
-    let inputValue = event.target.value;
-    const lastChar = inputValue[inputValue.length - 1];
-
-    if (/^[ㄱ-ㅎㅏ-ㅣ가-힣]$/.test(lastChar)) {
-      const convertedText = Array.from(
-        inputValue,
-        convertToEnglish(koreanToEnglishMap, isShiftKeyPressed.current)
-      ).join("");
-      callback(convertedText);
-    } else {
-      callback(inputValue);
-    }
+    const inputValue = inputEvent.target.value;
+    const jamoArray = splitJamo(inputValue);
+    const convertedText = jamoArray
+      .map((jamo) =>
+        convertToEnglish(koreanToEnglishMap, isShiftKeyPressed.current)(jamo)
+      )
+      .join("");
+    callback(convertedText);
   }
+
   function splitJamo(input: string) {
     const hangulPattern = /[\uAC00-\uD7AF]/;
     const splitPattern = /([\u1100-\u1112\u1161-\u1175\u11A8-\u11C2])/;
@@ -115,10 +99,7 @@ function App() {
 
     return jamoArray;
   }
-  function koreanToEnglish(text: string) {
-    let tt = document.getElementById("display") as HTMLDivElement;
-    tt.innerHTML = inko.ko2en(text);
-  }
+
   useEffect(() => {
     const hiddenInput = document.getElementById("hidden-input");
     const display = document.getElementById("display");

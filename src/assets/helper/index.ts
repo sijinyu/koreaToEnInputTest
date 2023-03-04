@@ -46,24 +46,6 @@ export const koreanToEnglishMap: CharMap = {
   ㅣ: { lower: "l", upper: "L" },
 };
 
-// export function convertToEnglish(charMap: CharMap, isShiftKeyPressed: boolean) {
-//   let shouldCapitalize = false;
-
-//   return function (char: string) {
-//     if (charMap[char]) {
-//       const englishChar = charMap[char];
-//       if (isShiftKeyPressed && !shouldCapitalize) {
-//         shouldCapitalize = true;
-//         return englishChar.upper;
-//       } else {
-//         shouldCapitalize = false;
-//         return englishChar.lower;
-//       }
-//     }
-//     return char;
-//   };
-// }
-
 export function convertToEnglish(charMap: CharMap, isShiftKeyPressed: boolean) {
   let previousChar: string | null = null;
   let previousEnglishChar: string | null = null;
