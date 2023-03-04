@@ -113,12 +113,12 @@ function App() {
         ref={inputEl}
         // onCompositionStart={() => setComposing(true)}
         // onCompositionUpdate={(e) => (test.current = inko.ko2en(e.data))}
-        // onCompositionEnd={(e) => {
-        //   setComposing(false), (inputEl.current!.value = test.current);
-        // }}
-        onInput={(e) => {
+        onCompositionEnd={(e) => {
           inputEl.current!.value = inko.ko2en(inputEl.current!.value);
         }}
+        // onInput={(e) => {
+        //   inputEl.current!.value = inko.ko2en(inputEl.current!.value);
+        // }}
         // onKeyDown={handleKeyDown}
         // onKeyUp={handleKeyUp}
       />
