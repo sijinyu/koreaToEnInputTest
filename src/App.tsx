@@ -90,6 +90,10 @@ function App() {
       });
     }
   }, []);
+  useEffect(() => {
+    inputEl.current!.type = "text";
+    inputEl.current!.inputMode = "latin";
+  }, []);
   return (
     <div className="input-container">
       {/* <input
