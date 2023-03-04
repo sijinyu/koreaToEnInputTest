@@ -37,6 +37,8 @@ function App() {
   function splitJamo(input: string) {
     const hangulPattern = /[\uAC00-\uD7AF]/;
     const splitPattern = /([\u1100-\u1112\u1161-\u1175\u11A8-\u11C2])/;
+    const userAgent = navigator.userAgent;
+    const isMobile = /Mobile/.test(userAgent) || /Android/.test(userAgent);
 
     const jamoArray = [];
     let currentSyllable = "";
@@ -45,7 +47,11 @@ function App() {
     for (let i = 0; i < input.length; i++) {
       const char = input.charAt(i);
       if (hangulPattern.test(char)) {
-        if (lastCharWasHangul) {
+        if (isMobile && lastCharWasHangul && currentSyllable.length === 1) {
+          // On mobile, treat combined characters as a single unit
+          jamoArray.push(currentSyllable + char);
+          currentSyllable = "";
+        } else if (lastCharWasHangul) {
           jamoArray.push(...currentSyllable.split(""));
           currentSyllable = "";
         }
