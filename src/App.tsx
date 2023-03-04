@@ -3,7 +3,6 @@ import "./App.css";
 import { convertToEnglish, koreanToEnglishMap } from "./assets/helper";
 import { Inko } from "./assets/helper/test";
 function App() {
-  const [inputValue, setInputValue] = useState("");
   const handleCompositionStart = () => {
     setInputValue((prevValue) => {
       return prevValue.replace(/\u200B/g, "");
@@ -18,13 +17,13 @@ function App() {
     setInputValue(convertedText);
   };
 
-  const handleInput = (e: any) => {
-    const convertedText = Array.from(
-      e.target.value,
-      convertToEnglish(koreanToEnglishMap, e.shiftKey)
-    ).join("");
-    setInputValue(convertedText);
-  };
+  // const handleInput = (e: any) => {
+  //   const convertedText = Array.from(
+  //     e.target.value,
+  //     convertToEnglish(koreanToEnglishMap, e.shiftKey)
+  //   ).join("");
+  //   setInputValue(convertedText);
+  // };
 
   const [email, setEmail] = useState("");
   const isShiftKeyPressed = useRef(false);
@@ -59,7 +58,23 @@ function App() {
   //     .join("");
   //   callback(convertedText);
   // }
+  function handleInput(
+    event: React.ChangeEvent<HTMLInputElement>,
+    callback: (value: string) => void
+  ) {
+    let inputValue = event.target.value;
+    const lastChar = inputValue[inputValue.length - 1];
 
+    if (/^[ㄱ-ㅎㅏ-ㅣ가-힣]$/.test(lastChar)) {
+      const convertedText = Array.from(
+        inputValue,
+        convertToEnglish(koreanToEnglishMap, isShiftKeyPressed.current)
+      ).join("");
+      callback(convertedText);
+    } else {
+      callback(inputValue);
+    }
+  }
   function splitJamo(input: string) {
     const hangulPattern = /[\uAC00-\uD7AF]/;
     const splitPattern = /([\u1100-\u1112\u1161-\u1175\u11A8-\u11C2])/;
@@ -123,14 +138,22 @@ function App() {
         onKeyUp={(e: any) => koreanToEnglish(e.target.value)}
       />
       <div id="display" className="display" /> */}
-      <input
+      {/* <input
         type="text"
         value={inputValue}
         onCompositionStart={handleCompositionStart}
         onCompositionEnd={handleCompositionEnd}
         onInput={handleInput}
       />
-      <div>{inputValue}</div>
+      <div>{inputValue}</div> */}
+      <input
+        type="text"
+        value={email}
+        onKeyDown={handleKeyDown}
+        onKeyUp={handleKeyUp}
+        onChange={(e) => handleInput(e, handleChangeEmail)}
+      />
+      <div>{email}</div>
     </div>
   );
 }
