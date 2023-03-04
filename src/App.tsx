@@ -113,8 +113,11 @@ function App() {
         ref={inputEl}
         // onCompositionStart={() => setComposing(true)}
         // onCompositionUpdate={(e) => (test.current = inko.ko2en(e.data))}
-        onCompositionEnd={(e) => {
-          inputEl.current!.value = inko.ko2en(inputEl.current!.value);
+        onChange={(e) => {
+          const currentValue = e.target.value;
+          // Convert the Korean characters to English using inko
+          const convertedValue = inko.ko2en(currentValue);
+          e.target.value = convertedValue;
         }}
         // onInput={(e) => {
         //   inputEl.current!.value = inko.ko2en(inputEl.current!.value);
